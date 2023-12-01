@@ -1,22 +1,42 @@
-import React from "react";
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import avatar from '../assets/images/doctor.jpg';
+import { ContextGlobal } from './utils/global.context'
 
 
-const Card = ({ name, username, id }) => {
+export const Card = ({ dentist }) => {
 
-  const addFav = ()=>{
-    // Aqui iria la logica para agregar la Card en el localStorage
+  const { state, dispatch } = useContext( ContextGlobal );
+  const [ favoriteState, setFavoriteState ] = useState(state.favorites.includes(dentist.id));
+
+  const onToggleFavorite = () => {
+    const isCurrentlyFavorite = state.favorites.includes(dentist.id);
+
+    if (isCurrentlyFavorite) {
+        const updatedFavorites = state.favorites.filter(favId => favId !== dentist.id);
+        dispatch({ type: 'TOGGLE_FAVORITE', payload: updatedFavorites });
+        setFavoriteState(false);
+    } else {
+        const updatedFavorites = [...state.favorites, dentist.id];
+        dispatch({ type: 'TOGGLE_FAVORITE', payload: updatedFavorites });
+        setFavoriteState(true);
+    }
   }
 
   return (
     <div className="card">
-        {/* En cada card deberan mostrar en name - username y el id */}
-
-        {/* No debes olvidar que la Card a su vez servira como Link hacia la pagina de detalle */}
-
-        {/* Ademas deberan integrar la logica para guardar cada Card en el localStorage */}
-        <button onClick={addFav} className="favButton">Add fav</button>
+        <div className="card-header">
+            <Link to={`/dentist/${dentist.id}`}>
+                <img src={avatar} alt="Descripción de la imagen" />
+            </Link>
+            <button onClick={ onToggleFavorite } className={`favorite-icon ${(favoriteState) ? 'favorite-icon-enable' : ''}`} >&#10084;</button>
+        </div>
+        <div className="card-footer">
+            <div className="name">
+                <p>{ dentist.name }</p>
+                <p>{ dentist.email }</p>
+            </div>
+        </div>
     </div>
   );
 };
-
-export default Card;
