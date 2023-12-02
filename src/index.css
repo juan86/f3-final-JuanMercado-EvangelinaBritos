@@ -307,3 +307,10 @@ margin-bottom: 10px;
 .footer .info-label {
   font-weight: bold; /* Hace los textos "Integrador:", "Materia:" y "Carrera:" en negrita */
 }
+.footer img {
+  width: 30px;
+}
+
+.imagen-oscura{
+  filter: brightness(50%);
+}

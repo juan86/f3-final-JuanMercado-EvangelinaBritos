@@ -27,7 +27,7 @@ export const Form = () => {
         return;
       }
 
-      setSuccessMessage(`Gracias ${formData.fullName}, te contactaremos cuando antes vía mail`);
+      setSuccessMessage(`Gracias ${formData.fullName}, te contactaremos cuanto antes vía mail`);
       setError('');
 
       setFormData({
